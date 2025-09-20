@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using TPie.Models.Elements;
+using TPie.Localization;
 using LuminaAction = Lumina.Excel.Sheets.Action;
 
 namespace TPie.Config
@@ -49,7 +50,7 @@ namespace TPie.Config
             if (ActionElement == null) return;
 
             ImGui.PushItemWidth(210 * _scale);
-            if (ImGui.InputText("ID or Name ##Action", ref _inputText, 100))
+            if (ImGui.InputText(LocalizationManager.T("ID or Name") + " ##Action", ref _inputText, 100))
             {
                 SearchActions(_inputText);
             }

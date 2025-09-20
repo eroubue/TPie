@@ -18,6 +18,7 @@ using TPie.Config;
 using TPie.Helpers;
 using TPie.Models;
 using TPie.Models.Elements;
+using TPie.Localization;
 
 namespace TPie
 {
@@ -105,12 +106,16 @@ namespace TPie
             Framework.Update += Update;
             UiBuilder.Draw += Draw;
             UiBuilder.OpenConfigUi += OpenConfigUi;
+            UiBuilder.OpenMainUi += OpenConfigUi;
+
+            // 初始化本地化系统
+            LocalizationManager.Initialize();
 
             CommandManager.AddHandler(
                 "/tpie",
                 new CommandInfo(PluginCommand)
                 {
-                    HelpMessage = "Opens the TPie configuration window.",
+                    HelpMessage = LocalizationManager.T("Opens the TPie configuration window."),
 
                     ShowInHelp = true
                 }
@@ -160,17 +165,17 @@ namespace TPie
 
         private void CreateWindows()
         {
-            _settingsWindow = new SettingsWindow("TPie Settings");
-            _ringSettingsWindow = new RingSettingsWindow("Ring Settings");
-            _actionElementWindow = new ActionElementWindow("Edit Action");
-            _itemElementWindow = new ItemElementWindow("Edit Item");
-            _gearSetElementWindow = new GearSetElementWindow("Edit Gear Set");
-            _emoteElementWindow = new EmoteElementWindow("Edit Emote");
-            _commandElementWindow = new CommandElementWindow("Edit Command");
-            _gameMacroElementWindow = new GameMacroElementWindow("Edit Game Macro");
-            _nestedRingElementWindow = new NestedRingElementWindow("Edit Nested Ring");
-            _iconBrowserWindow = new IconBrowserWindow("Icon Picker");
-            _keyBindWindow = new KeyBindWindow("Edit Keybind");
+            _settingsWindow = new SettingsWindow(LocalizationManager.T("TPie Settings"));
+            _ringSettingsWindow = new RingSettingsWindow(LocalizationManager.T("Ring Settings"));
+            _actionElementWindow = new ActionElementWindow(LocalizationManager.T("Edit Action"));
+            _itemElementWindow = new ItemElementWindow(LocalizationManager.T("Edit Item"));
+            _gearSetElementWindow = new GearSetElementWindow(LocalizationManager.T("Edit Gear Set"));
+            _emoteElementWindow = new EmoteElementWindow(LocalizationManager.T("Edit Emote"));
+            _commandElementWindow = new CommandElementWindow(LocalizationManager.T("Edit Command"));
+            _gameMacroElementWindow = new GameMacroElementWindow(LocalizationManager.T("Edit Game Macro"));
+            _nestedRingElementWindow = new NestedRingElementWindow(LocalizationManager.T("Edit Nested Ring"));
+            _iconBrowserWindow = new IconBrowserWindow(LocalizationManager.T("Icon Picker"));
+            _keyBindWindow = new KeyBindWindow(LocalizationManager.T("Edit Keybind"));
 
             _windowSystem = new WindowSystem("TPie_Windows");
             _windowSystem.AddWindow(_settingsWindow);

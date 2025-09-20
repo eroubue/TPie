@@ -6,6 +6,7 @@ using System;
 using System.Numerics;
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Textures.TextureWraps;
+using TPie.Localization;
 
 namespace TPie.Helpers
 {
@@ -120,7 +121,7 @@ namespace TPie.Helpers
 
                 ImGui.NewLine();
 
-                if (ImGui.Button("OK", new Vector2(width / 2f - 5, 24)))
+                if (ImGui.Button(LocalizationManager.T("OK"), new Vector2(width / 2f - 5, 24)))
                 {
                     ImGui.CloseCurrentPopup();
                     didConfirm = true;
@@ -129,7 +130,7 @@ namespace TPie.Helpers
 
                 ImGui.SetItemDefaultFocus();
                 ImGui.SameLine();
-                if (ImGui.Button("Cancel", new Vector2(width / 2f - 5, 24)))
+                if (ImGui.Button(LocalizationManager.T("Cancel"), new Vector2(width / 2f - 5, 24)))
                 {
                     ImGui.CloseCurrentPopup();
                     didClose = true;

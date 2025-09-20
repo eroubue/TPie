@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using TPie.Helpers;
 using TPie.Models;
 using TPie.Models.Elements;
+using TPie.Localization;
 
 namespace TPie.Config
 {
@@ -43,7 +44,7 @@ namespace TPie.Config
 
             _animationNames = new string[]
             {
-                "None", "Spiral", "Sequential", "Fade"
+                LocalizationManager.T("None"), LocalizationManager.T("Spiral"), LocalizationManager.T("Sequential"), LocalizationManager.T("Fade")
             };
         }
 
@@ -62,21 +63,21 @@ namespace TPie.Config
             }
 
             // General
-            if (ImGui.BeginTabItem("General ##TPie_Settings"))
+            if (ImGui.BeginTabItem(LocalizationManager.T("General") + " ##TPie_Settings"))
             {
                 DrawGeneralTab();
                 ImGui.EndTabItem();
             }
 
             // Global Border Settings
-            if (ImGui.BeginTabItem("Global Border Settings ##TPie_Settings"))
+            if (ImGui.BeginTabItem(LocalizationManager.T("Global Border Settings") + " ##TPie_Settings"))
             {
                 DrawGlobalBorderSettingsTab();
                 ImGui.EndTabItem();
             }
 
             // Rings
-            if (ImGui.BeginTabItem("Rings ##TPie_Settings"))
+            if (ImGui.BeginTabItem(LocalizationManager.T("Rings") + " ##TPie_Settings"))
             {
                 DrawRingsTab();
                 ImGui.EndTabItem();
@@ -87,9 +88,9 @@ namespace TPie.Config
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(255f / 255f, 94f / 255f, 91f / 255f, .85f));
 
             ImGui.SetCursorPos(new Vector2(280 * _scale, 26 * _scale));
-            if (ImGui.Button("Support on Ko-fi", new Vector2(104 * _scale, 24 * _scale)))
+            if (ImGui.Button(LocalizationManager.T("Support on Ko-fi"), new Vector2(104 * _scale, 24 * _scale)))
             {
-                OpenUrl("https://ko-fi.com/Tischel");
+                OpenUrl("https://afdian.com/a/Nag0mi");
             }
 
             ImGui.PopStyleColor(2);
@@ -128,41 +129,41 @@ namespace TPie.Config
         private void DrawGeneralTab()
         {
             // position
-            ImGui.Text("Position");
+            ImGui.Text(LocalizationManager.T("Position"));
             ImGui.BeginChild("##Position", new Vector2(384 * _scale, 70 * _scale), true);
             {
-                if (ImGui.RadioButton("Center at Cursor", Settings.AppearAtCursor))
+                if (ImGui.RadioButton(LocalizationManager.T("Center at Cursor"), Settings.AppearAtCursor))
                 {
                     Settings.AppearAtCursor = true;
                 }
 
-                if (ImGui.RadioButton("Set Position", !Settings.AppearAtCursor))
+                if (ImGui.RadioButton(LocalizationManager.T("Set Position"), !Settings.AppearAtCursor))
                 {
                     Settings.AppearAtCursor = false;
                 }
-                DrawHelper.SetTooltip("(0,0) is the center of the screen");
+                DrawHelper.SetTooltip(LocalizationManager.T("(0,0) is the center of the screen"));
 
                 if (!Settings.AppearAtCursor)
                 {
                     ImGui.SameLine();
                     ImGui.PushItemWidth(140 * _scale);
                     ImGui.DragFloat2("##Position", ref Settings.CenterPositionOffset, 0.5f, -4000, 4000);
-                    DrawHelper.SetTooltip("(0,0) is the center of the screen");
+                    DrawHelper.SetTooltip(LocalizationManager.T("(0,0) is the center of the screen"));
 
                     ImGui.SameLine();
-                    ImGui.Checkbox("Center Cursor", ref Settings.AutoCenterCursor);
-                    DrawHelper.SetTooltip("Your cursor will automatically move to the center of the ring when activated.");
+                    ImGui.Checkbox(LocalizationManager.T("Center Cursor"), ref Settings.AutoCenterCursor);
+                    DrawHelper.SetTooltip(LocalizationManager.T("Your cursor will automatically move to the center of the ring when activated."));
                 }
             }
             ImGui.EndChild();
 
             // font
             ImGui.Spacing();
-            ImGui.Text("Font");
+            ImGui.Text(LocalizationManager.T("Font"));
             ImGui.BeginChild("##Font", new Vector2(384 * _scale, 40 * _scale), true);
             {
-                ImGui.Checkbox("Use Custom Font", ref Settings.UseCustomFont);
-                DrawHelper.SetTooltip("Enable to use the Expressway font that comes with TPie.\nDisable to use the system font.");
+                ImGui.Checkbox(LocalizationManager.T("Use Custom Font"), ref Settings.UseCustomFont);
+                DrawHelper.SetTooltip(LocalizationManager.T("Enable to use the Expressway font that comes with TPie.\nDisable to use the system font."));
 
                 if (Settings.UseCustomFont)
                 {
@@ -172,7 +173,7 @@ namespace TPie.Config
 
                     ImGui.PushItemWidth(80 * _scale);
                     int fontIndex = Settings.FontSize - 14;
-                    if (ImGui.Combo("Size", ref fontIndex, _fontSizes, _fontSizes.Length))
+                    if (ImGui.Combo(LocalizationManager.T("Size"), ref fontIndex, _fontSizes, _fontSizes.Length))
                     {
                         Settings.FontSize = fontIndex + 14;
                         FontsHelper.LoadFont();
@@ -183,41 +184,41 @@ namespace TPie.Config
 
             // keybinds
             ImGui.Spacing();
-            ImGui.Text("Keybinds");
+            ImGui.Text(LocalizationManager.T("Keybinds"));
             ImGui.BeginChild("##Keybinds", new Vector2(384 * _scale, 64 * _scale), true);
             {
-                ImGui.Checkbox("Keybind Passthrough", ref Settings.KeybindPassthrough);
-                DrawHelper.SetTooltip("When enabled, TPie wont prevent the game from receiving a key press asssigned for a ring.");
+                ImGui.Checkbox(LocalizationManager.T("Keybind Passthrough"), ref Settings.KeybindPassthrough);
+                DrawHelper.SetTooltip(LocalizationManager.T("When enabled, TPie wont prevent the game from receiving a key press asssigned for a ring."));
 
                 ImGui.SameLine();
-                ImGui.Checkbox("Enable Quick Settings", ref Settings.EnableQuickSettings);
-                DrawHelper.SetTooltip("When enabled, double right-clicking when a ring is opened will open the settings for that ring.");
+                ImGui.Checkbox(LocalizationManager.T("Enable Quick Settings"), ref Settings.EnableQuickSettings);
+                DrawHelper.SetTooltip(LocalizationManager.T("When enabled, double right-clicking when a ring is opened will open the settings for that ring."));
 
-                ImGui.Checkbox("Enable Escape key to close rings", ref Settings.EnableQuickSettings);
-                DrawHelper.SetTooltip("When enabled, pressing the Escape key while a ring with a toggable keybind is opened will immediately close it.");
+                ImGui.Checkbox(LocalizationManager.T("Enable Escape key to close rings"), ref Settings.EnableQuickSettings);
+                DrawHelper.SetTooltip(LocalizationManager.T("When enabled, pressing the Escape key while a ring with a toggable keybind is opened will immediately close it."));
             }
             ImGui.EndChild();
 
             // style
             ImGui.Spacing();
-            ImGui.Text("Style");
+            ImGui.Text(LocalizationManager.T("Style"));
             ImGui.BeginChild("##Style", new Vector2(384 * _scale, 64 * _scale), true);
             {
-                ImGui.Checkbox("Draw Rings Background", ref Settings.DrawRingBackground);
+                ImGui.Checkbox(LocalizationManager.T("Draw Rings Background"), ref Settings.DrawRingBackground);
 
                 ImGui.SameLine();
-                ImGui.Checkbox("Resize Icons When Hovered", ref Settings.AnimateIconSizes);
+                ImGui.Checkbox(LocalizationManager.T("Resize Icons When Hovered"), ref Settings.AnimateIconSizes);
 
-                ImGui.Checkbox("Show Cooldowns", ref Settings.ShowCooldowns);
+                ImGui.Checkbox(LocalizationManager.T("Show Cooldowns"), ref Settings.ShowCooldowns);
 
                 ImGui.SameLine();
-                ImGui.Checkbox("Show Remaining Item Count", ref Settings.ShowRemainingItemCount);
+                ImGui.Checkbox(LocalizationManager.T("Show Remaining Item Count"), ref Settings.ShowRemainingItemCount);
             }
             ImGui.EndChild();
 
             // animation
             ImGui.Spacing();
-            ImGui.Text("Animation");
+            ImGui.Text(LocalizationManager.T("Animation"));
             ImGui.BeginChild("##Animation", new Vector2(384 * _scale, 40 * _scale), true);
             {
                 ImGui.PushItemWidth(100 * _scale);
@@ -232,16 +233,16 @@ namespace TPie.Config
 
                 ImGui.PushItemWidth(80);
                 ImGui.SameLine();
-                ImGui.DragFloat("Duration", ref Settings.AnimationDuration, 0.1f, 0, 5);
-                DrawHelper.SetTooltip("In seconds");
+                ImGui.DragFloat(LocalizationManager.T("Duration"), ref Settings.AnimationDuration, 0.1f, 0, 5);
+                DrawHelper.SetTooltip(LocalizationManager.T("In seconds"));
             }
             ImGui.EndChild();
         }
 
         private void DrawGlobalBorderSettingsTab()
         {
-            ImGui.Text("These are the default border settings that will be");
-            ImGui.Text("used when creating a new ring element.");
+            ImGui.Text(LocalizationManager.T("These are the default border settings that will be"));
+            ImGui.Text(LocalizationManager.T("used when creating a new ring element."));
             ImGui.NewLine();
 
             ImGui.BeginChild("##GlobalBorderSettings", new Vector2(272 * _scale, 93 * _scale), true);
@@ -251,14 +252,14 @@ namespace TPie.Config
             ImGui.EndChild();
 
             ImGui.NewLine();
-            if (ImGui.Button("Apply to all existing elements", new Vector2(272, 30)))
+            if (ImGui.Button(LocalizationManager.T("Apply to all existing elements"), new Vector2(272, 30)))
             {
                 _applyingGlobalBorderSettings = true;
             }
 
             if (_applyingGlobalBorderSettings)
             {
-                var (didConfirm, didClose) = DrawHelper.DrawConfirmationModal("Apply?", "Are you sure you want to apply these border", "settings to all existing elements?", "There is no way to undo this!");
+                var (didConfirm, didClose) = DrawHelper.DrawConfirmationModal(LocalizationManager.T("Apply?"), LocalizationManager.T("Are you sure you want to apply these border"), LocalizationManager.T("settings to all existing elements?"), LocalizationManager.T("There is no way to undo this!"));
 
                 if (didConfirm)
                 {
@@ -286,7 +287,7 @@ namespace TPie.Config
             ImGui.BeginChild("##Options", new Vector2(384 * _scale, 40 * _scale), true);
             {
                 ImGui.SameLine();
-                ImGui.Text("Create New");
+                ImGui.Text(LocalizationManager.T("Create New"));
                 ImGui.SameLine();
                 ImGui.PushFont(UiBuilder.IconFont);
                 if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString()))
@@ -295,10 +296,10 @@ namespace TPie.Config
                     Plugin.Settings.AddRing(newRing);
                 }
                 ImGui.PopFont();
-                DrawHelper.SetTooltip("Adds a new empty Ring");
+                DrawHelper.SetTooltip(LocalizationManager.T("Adds a new empty Ring"));
 
                 ImGui.SameLine();
-                ImGui.Text("\t\t\tImport");
+                ImGui.Text("\t\t\t" + LocalizationManager.T("Import"));
                 ImGui.SameLine();
                 ImGui.PushFont(UiBuilder.IconFont);
                 if (ImGui.Button(FontAwesomeIcon.Download.ToIconString()))
@@ -312,10 +313,10 @@ namespace TPie.Config
                     }
                 }
                 ImGui.PopFont();
-                DrawHelper.SetTooltip("Adds new Rings by importing them from the clipboard");
+                DrawHelper.SetTooltip(LocalizationManager.T("Adds new Rings by importing them from the clipboard"));
 
                 ImGui.SameLine();
-                ImGui.Text("\t\t\tExport all");
+                ImGui.Text("\t\t\t" + LocalizationManager.T("Export all"));
                 ImGui.SameLine();
                 ImGui.PushFont(UiBuilder.IconFont);
                 if (ImGui.Button(FontAwesomeIcon.Upload.ToIconString()))
@@ -324,7 +325,7 @@ namespace TPie.Config
                     ImGui.SetClipboardText(exportString);
                 }
                 ImGui.PopFont();
-                DrawHelper.SetTooltip("Exports all Rings to the clipboard");
+                DrawHelper.SetTooltip(LocalizationManager.T("Exports all Rings to the clipboard"));
             }
             ImGui.EndChild();
 
@@ -339,11 +340,11 @@ namespace TPie.Config
             // rings
             if (ImGui.BeginTable("##Rings_Table", 5, flags, new Vector2(384 * _scale, 366 * _scale)))
             {
-                ImGui.TableSetupColumn("Color", ImGuiTableColumnFlags.WidthStretch, 8, 0);
-                ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 25, 1);
-                ImGui.TableSetupColumn("Keybind", ImGuiTableColumnFlags.WidthStretch, 29, 2);
-                ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthStretch, 24, 3);
-                ImGui.TableSetupColumn("Move", ImGuiTableColumnFlags.WidthStretch, 14, 4);
+                ImGui.TableSetupColumn(LocalizationManager.T("Color"), ImGuiTableColumnFlags.WidthStretch, 8, 0);
+                ImGui.TableSetupColumn(LocalizationManager.T("Name"), ImGuiTableColumnFlags.WidthStretch, 25, 1);
+                ImGui.TableSetupColumn(LocalizationManager.T("Keybind"), ImGuiTableColumnFlags.WidthStretch, 29, 2);
+                ImGui.TableSetupColumn(LocalizationManager.T("Actions"), ImGuiTableColumnFlags.WidthStretch, 24, 3);
+                ImGui.TableSetupColumn(LocalizationManager.T("Move"), ImGuiTableColumnFlags.WidthStretch, 14, 4);
 
                 ImGui.TableSetupScrollFreeze(0, 1);
                 ImGui.TableHeadersRow();
@@ -391,7 +392,7 @@ namespace TPie.Config
                             Plugin.ShowRingSettingsWindow(RingWindowPos, ring);
                         }
                         ImGui.PopFont();
-                        DrawHelper.SetTooltip("Edit Elements");
+                        DrawHelper.SetTooltip(LocalizationManager.T("Edit Elements"));
 
                         ImGui.SameLine();
                         ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 3 * _scale);
@@ -402,7 +403,7 @@ namespace TPie.Config
                             ImGui.SetClipboardText(exportString);
                         }
                         ImGui.PopFont();
-                        DrawHelper.SetTooltip("Export to clipboard");
+                        DrawHelper.SetTooltip(LocalizationManager.T("Export to clipboard"));
 
                         ImGui.SameLine();
                         ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 3 * _scale);
@@ -412,7 +413,7 @@ namespace TPie.Config
                             _removingRing = ring;
                         }
                         ImGui.PopFont();
-                        DrawHelper.SetTooltip("Delete");
+                        DrawHelper.SetTooltip(LocalizationManager.T("Delete"));
                     }
 
                     // move
@@ -436,7 +437,7 @@ namespace TPie.Config
                             }
                         }
                         ImGui.PopFont();
-                        DrawHelper.SetTooltip("Move up");
+                        DrawHelper.SetTooltip(LocalizationManager.T("Move up"));
 
                         ImGui.SameLine();
                         ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 3 * _scale);
@@ -458,7 +459,7 @@ namespace TPie.Config
                             }
                         }
                         ImGui.PopFont();
-                        DrawHelper.SetTooltip("Move down");
+                        DrawHelper.SetTooltip(LocalizationManager.T("Move down"));
                     }
                 }
 
@@ -467,7 +468,7 @@ namespace TPie.Config
 
             if (_removingRing != null)
             {
-                var (didConfirm, didClose) = DrawHelper.DrawConfirmationModal("Delete?", $"Are you sure you want to delete \"{_removingRing.Name}\"");
+                var (didConfirm, didClose) = DrawHelper.DrawConfirmationModal(LocalizationManager.T("Delete?"), string.Format(LocalizationManager.T("Are you sure you want to delete \"{0}\"?"), _removingRing.Name));
 
                 if (didConfirm)
                 {

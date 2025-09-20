@@ -1,7 +1,6 @@
 ﻿using Dalamud.Interface.Internal;
 using DelvUI.Helpers;
 using Dalamud.Bindings.ImGui;
-using ImGuiScene;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;

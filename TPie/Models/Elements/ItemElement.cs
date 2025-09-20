@@ -1,6 +1,5 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
 using Dalamud.Bindings.ImGui;
-using ImGuiScene;
 using System.Numerics;
 using TPie.Helpers;
 

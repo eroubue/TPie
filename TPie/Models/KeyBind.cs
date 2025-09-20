@@ -3,6 +3,7 @@ using Dalamud.Bindings.ImGui;
 using System.Collections.Generic;
 using System.Linq;
 using TPie.Helpers;
+using TPie.Localization;
 
 namespace TPie.Models
 {
@@ -32,9 +33,9 @@ namespace TPie.Models
 
         public override string ToString()
         {
-            string ctrl = Ctrl ? "Ctrl + " : "";
-            string alt = Alt ? "Alt + " : "";
-            string shift = Shift ? "Shift + " : "";
+            string ctrl = Ctrl ? LocalizationManager.T("Ctrl + ") : "";
+            string alt = Alt ? LocalizationManager.T("Alt + ") : "";
+            string shift = Shift ? LocalizationManager.T("Shift + ") : "";
             string key = ((Keys)Key).ToString();
 
             return ctrl + alt + shift + key;
@@ -118,7 +119,7 @@ namespace TPie.Models
 
             ImGui.PushItemWidth(width);
             ImGui.InputText($"##{id}_Keybind", ref dispKey, 200, ImGuiInputTextFlags.ReadOnly);
-            DrawHelper.SetTooltip("Backspace to clear");
+            DrawHelper.SetTooltip(LocalizationManager.T("Backspace to clear"));
 
             if (ImGui.IsItemActive())
             {
